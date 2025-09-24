@@ -8,15 +8,15 @@ const PORT = process.env.PORT ||3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Create an instance of an Express application
+const app = express();
+
 /**
  * Configure Express middleware
  */
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Create an instance of an Express application
-const app = express();
 
 const name = process.env.NAME; 
 
