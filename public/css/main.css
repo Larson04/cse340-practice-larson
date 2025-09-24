@@ -28,3 +28,9 @@ body {
         }
     }
 }
+
+body{
+    img{
+        width: 30%;
+    }
+}

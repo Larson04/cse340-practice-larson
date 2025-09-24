@@ -4,12 +4,13 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 
 // Define the port number the server will listen on
-const PORT = process.env.PORT ||3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PORT = process.env.PORT ||3000;
 
 // Create an instance of an Express application
 const app = express();
+const name = process.env.NAME; 
 
 /**
  * Configure Express middleware
@@ -18,7 +19,6 @@ const app = express();
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-const name = process.env.NAME; 
 
 
 // Define a route handler for the root URL ('/')
