@@ -73,14 +73,81 @@ const courses = {
 app.use((req, res, next) => {
     // Make NODE_ENV available to all templates
     res.locals.NODE_ENV = NODE_ENV.toLowerCase() || 'production';
-
+    
     // Continue to the next middleware or route handler
     next();
 });
 
 /**
  * Routes
- */
+*/
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next(); // Pass control to the next middleware or route
+});
+// Middleware to add global data to all templates
+app.use((req, res, next) => {
+    // Add current year for copyright
+    res.locals.currentYear = new Date().getFullYear();
+
+    next();
+});
+// Global middleware for time-based greeting
+app.use((req, res, next) => {
+    const currentHour = new Date().getHours();
+
+    /**
+     * Create logic to set different greetings based on the current hour.
+     * Use res.locals.greeting to store the greeting message.
+     * Hint: morning (before 12), afternoon (12-17), evening (after 17)
+     */
+    
+    if (currentHour < 12) {
+        res.locals.greeting = 'Good Morning';
+    } else if (currentHour < 17) {
+        res.locals.greeting = 'Good Afternoon';
+    } else {
+        res.locals.greeting = 'Good Evening';
+    }
+
+    next();
+});
+// Global middleware for random theme selection
+app.use((req, res, next) => {
+    const themes = ['blue-theme', 'green-theme', 'red-theme'];
+
+    // Your task: Pick a random theme from the array
+    const index = Math.floor(Math.random() * themes.length);
+    const randomTheme = themes[index];
+    res.locals.bodyClass = randomTheme;
+
+    next();
+});
+// Global middleware to share query parameters with templates
+app.use((req, res, next) => {
+    // Your task: Make req.query available to all templates
+    // Add it to res.locals so templates can access query parameters
+    res.locals.queryParams = req.query;
+
+    next();
+});
+// Route-specific middleware that sets custom headers
+const addDemoHeaders = (req, res, next) => {
+    // Your task: Set custom headers using res.setHeader()
+    // Add a header called 'X-Demo-Page' with value 'true'
+    res.setHeader('X-Demo-Page', 'true');
+    // Add a header called 'X-Middleware-Demo' with any message you want
+    res.setHeader('X-Middleware-Demo', 'This is a middleware demo');
+
+    next();
+};
+// Demo page route with header middleware
+app.get('/demo', addDemoHeaders, (req, res) => {
+    res.render('demo', {
+        title: 'Middleware Demo Page'
+    });
+});
+
 app.get('/', (req, res) => {
     const title = 'Welcome Home';
     res.render('home', { title });
@@ -99,6 +166,7 @@ app.get('/demo/:color/:food', (req, res) => {
     const title = 'Params Demo';
     res.render('demo', { title, color, food });
 });
+
 
 // Course catalog list page
 app.get('/catalog', (req, res) => {
