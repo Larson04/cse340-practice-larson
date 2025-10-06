@@ -2,6 +2,7 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import primaryRouter from './src/controllers/primary.js';
 
 // Define the port number the server will listen on
 const __filename = fileURLToPath(import.meta.url);
@@ -26,43 +27,6 @@ app.set('view engine', 'ejs');
 // Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'));
 
-
-// Course data - place this after imports, before routes
-const courses = {
-    'CS121': {
-        id: 'CS121',
-        title: 'Introduction to Programming',
-        description: 'Learn programming fundamentals using JavaScript and basic web development concepts.',
-        credits: 3,
-        sections: [
-            { time: '9:00 AM', room: 'STC 392', professor: 'Brother Jack' },
-            { time: '2:00 PM', room: 'STC 394', professor: 'Sister Enkey' },
-            { time: '11:00 AM', room: 'STC 390', professor: 'Brother Keers' }
-        ]
-    },
-    'MATH110': {
-        id: 'MATH110',
-        title: 'College Algebra',
-        description: 'Fundamental algebraic concepts including functions, graphing, and problem solving.',
-        credits: 4,
-        sections: [
-            { time: '8:00 AM', room: 'MC 301', professor: 'Sister Anderson' },
-            { time: '1:00 PM', room: 'MC 305', professor: 'Brother Miller' },
-            { time: '3:00 PM', room: 'MC 307', professor: 'Brother Thompson' }
-        ]
-    },
-    'ENG101': {
-        id: 'ENG101',
-        title: 'Academic Writing',
-        description: 'Develop writing skills for academic and professional communication.',
-        credits: 3,
-        sections: [
-            { time: '10:00 AM', room: 'GEB 201', professor: 'Sister Anderson' },
-            { time: '12:00 PM', room: 'GEB 205', professor: 'Brother Davis' },
-            { time: '4:00 PM', room: 'GEB 203', professor: 'Sister Enkey' }
-        ]
-    }
-};
 
 /**
  * Global template variables middleware
@@ -148,33 +112,10 @@ app.get('/demo', addDemoHeaders, (req, res) => {
     });
 });
 
-app.get('/', (req, res) => {
-    const title = 'Welcome Home';
-    res.render('home', { title });
-});
-app.get('/about', (req, res) => {
-    const title = 'About Me';
-    res.render('about', { title });
-});
-app.get('/products', (req, res) => {
-    const title = 'Our Products';
-    res.render('products', { title });
-});
-
-app.get('/demo/:color/:food', (req, res) => {
-    const {color, food} = req.params;
-    const title = 'Params Demo';
-    res.render('demo', { title, color, food });
-});
-
-
-// Course catalog list page
-app.get('/catalog', (req, res) => {
-    res.render('catalog', {
-        title: 'Course Catalog',
-        courses: courses
-    });
-});
+app.use('/', primaryRouter);
+app.use('/about', primaryRouter);
+app.use('/products', primaryRouter);
+app.use('/catalog', primaryRouter);
 
 // Enhanced course detail route with sorting
 app.get('/catalog/:courseId', (req, res, next) => {
