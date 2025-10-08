@@ -1,4 +1,4 @@
-import { courses } from '../model/catalog.js';
+import { courses } from '../model/catalog/catalog.js';
 import express from 'express';
 
 const router = express.Router();
@@ -10,10 +10,6 @@ router.get('/', (req, res) => {
 router.get('/about', (req, res) => {
     const title = 'About Me';
     res.render('about', { title });
-});
-router.get('/products', (req, res) => {
-    const title = 'Our Products';
-    res.render('products', { title });
 });
 
 router.get('/catalog', (req, res) => {

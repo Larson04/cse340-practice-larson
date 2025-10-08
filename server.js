@@ -27,7 +27,6 @@ app.set('view engine', 'ejs');
 // Tell Express where to find your templates
 app.set('views', path.join(__dirname, 'src/views'));
 
-
 /**
  * Global template variables middleware
  * 
@@ -49,6 +48,7 @@ app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next(); // Pass control to the next middleware or route
 });
+
 // Middleware to add global data to all templates
 app.use((req, res, next) => {
     // Add current year for copyright
@@ -56,6 +56,7 @@ app.use((req, res, next) => {
 
     next();
 });
+
 // Global middleware for time-based greeting
 app.use((req, res, next) => {
     const currentHour = new Date().getHours();
@@ -76,6 +77,7 @@ app.use((req, res, next) => {
 
     next();
 });
+
 // Global middleware for random theme selection
 app.use((req, res, next) => {
     const themes = ['blue-theme', 'green-theme', 'red-theme'];
@@ -87,6 +89,7 @@ app.use((req, res, next) => {
 
     next();
 });
+
 // Global middleware to share query parameters with templates
 app.use((req, res, next) => {
     // Your task: Make req.query available to all templates
@@ -95,6 +98,7 @@ app.use((req, res, next) => {
 
     next();
 });
+
 // Route-specific middleware that sets custom headers
 const addDemoHeaders = (req, res, next) => {
     // Your task: Set custom headers using res.setHeader()
@@ -105,6 +109,7 @@ const addDemoHeaders = (req, res, next) => {
 
     next();
 };
+
 // Demo page route with header middleware
 app.get('/demo', addDemoHeaders, (req, res) => {
     res.render('demo', {
@@ -112,9 +117,9 @@ app.get('/demo', addDemoHeaders, (req, res) => {
     });
 });
 
+// Primary routes
 app.use('/', primaryRouter);
 app.use('/about', primaryRouter);
-app.use('/products', primaryRouter);
 app.use('/catalog', primaryRouter);
 
 // Enhanced course detail route with sorting
