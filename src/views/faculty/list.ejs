@@ -1,0 +1,10 @@
+<%- include('partials/header') %>
+<main>
+    <h1>Faculty List</h1>
+    <p>Browse our CSE Department faculty: </p>
+    <ul>
+        <% Object.values(faculty).forEach(faculty => { %>
+            <li><a href="/faculty/<%= faculty.id %>"><%= faculty.name %></a></li>
+        <% }); %>
+    </ul>
+</main>
