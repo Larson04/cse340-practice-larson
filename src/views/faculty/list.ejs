@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 <main>
     <h1>Faculty List</h1>
     <p>Browse our CSE Department faculty: </p>
@@ -7,4 +7,8 @@
             <li><a href="/faculty/<%= faculty.id %>"><%= faculty.name %></a></li>
         <% }); %>
     </ul>
+    <div class="navigation">
+        <p><a href="../">&larr; Back to Home</a></p>
+    </div>
 </main>
+<%- include('../partials/footer') %>
