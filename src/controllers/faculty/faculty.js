@@ -1,4 +1,4 @@
-import { getAllFaculty, getFacultyById, getSortedFaculty } from "../../models/faculty/faculty";
+import { getAllFaculty, getFacultyById, getSortedFaculty } from "../../models/faculty/faculty.js";
 
 // Route handler for the faculty list page
 export const facultyListPage = (req, res) => {

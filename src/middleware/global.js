@@ -37,7 +37,7 @@ export const addImportantLocalVariables = (req, res, next) => {
  */
 export const addOptionalLocalVariables = (req, res, next) => {
     // Set greeting based on time of day
-    res.locals.greeting = `<p>${getCurrentGreeting()}</p>`;
+    res.locals.greeting = `${getCurrentGreeting()}`;
 
     // Randomly assign a theme class to the body
     const themes = ['blue-theme', 'green-theme', 'red-theme'];
