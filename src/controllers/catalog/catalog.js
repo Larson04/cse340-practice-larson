@@ -9,7 +9,7 @@ export const catalogPage = (req, res) => {
         courses: courses
     });
 };
-
+  
 // Route handler for individual course detail pages
 export const courseDetailPage = (req, res, next) => {
     const courseId = req.params.courseId;
