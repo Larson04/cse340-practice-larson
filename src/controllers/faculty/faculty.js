@@ -3,12 +3,15 @@ import { getAllFaculty, getFacultyById, getSortedFaculty } from "../../models/fa
 // Route handler for the faculty list page
 export const facultyListPage = (req, res) => {
     const faculty = getAllFaculty();
-    res.render('faculty-list', { title: 'Faculty List', faculty: faculty });
+    res.render('faculty/list', {
+        title: 'Faculty', 
+        faculty: faculty,
+    });
     
 }
 
 // Route handler for individual faculty detail pages
-export const facultyDetailPage = (req, res) => {
+export const facultyDetailPage = (req, res, next) => {
     const facultyId = req.params.facultyId;
     const faculty = getFacultyById(facultyId);
 
@@ -23,7 +26,7 @@ export const facultyDetailPage = (req, res) => {
     const sortBy = req.query.sort || 'time';
     const sortedFaculty = getSortedFaculty(faculty.name, sortBy);
 
-    res.render('faculty-detail', { 
+    res.render('faculty/detail', { 
         title: `${faculty.name}`, 
         faculty: { ...faculty, sections: sortedFaculty }, 
         currentSort: sortBy 
