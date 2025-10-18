@@ -1,7 +1,9 @@
 {
     "explorer.compactFolders": false,
     "cSpell.words": [
+        "bufferutil",
         "enkey",
-        "keers"
+        "keers",
+        "nodemon"
     ]
 }
