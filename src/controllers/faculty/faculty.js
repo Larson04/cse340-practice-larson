@@ -6,8 +6,8 @@ export const facultyListPage = (req, res) => {
     res.render('faculty/list', {
         title: 'Faculty', 
         faculty: faculty,
+        currentSort: req.query.sort || 'time'
     });
-    
 }
 
 // Route handler for individual faculty detail pages
