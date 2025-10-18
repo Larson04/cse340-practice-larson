@@ -1,10 +1,11 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { setupDatabase, testConnection } from './src/models/setup.js';
 
 // Import MVC components
 import routes from './src/controllers/routes.js';
-import { addImportantLocalVariables, addOptionalLocalVariables } from './src/middleware/global.js';
+import globalMiddleware from './src/middleware/global.js';
 
 /**
  * Server configuration
@@ -29,8 +30,8 @@ app.set('views', path.join(__dirname, 'src/views'));
 /**
  * Global Middleware
  */
-app.use(addImportantLocalVariables);
-app.use(addOptionalLocalVariables);
+
+app.use(globalMiddleware);
 
 /**
  * Routes
@@ -99,4 +100,15 @@ if (NODE_ENV.includes('dev')) {
  */
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
+});
+
+app.listen(PORT, async () => {
+    try {
+        await testConnection();
+        await setupDatabase();
+        console.log(`Server is running on http://127.0.0.1:${PORT}`);
+    } catch (error) {
+        console.error('Database setup failed:', error.message);
+        process.exit(1);
+    }
 });

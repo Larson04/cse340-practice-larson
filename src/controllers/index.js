@@ -16,3 +16,4 @@ export const testErrorPage = (req, res, next) => {
     err.status = 500;
     next(err);
 };
+

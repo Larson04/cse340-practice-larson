@@ -1,34 +1,41 @@
-import { getAllCourses, getCourseById, getSortedSections } from '../../models/catalog/catalog.js';
+import { getAllCourses, getCourseBySlug } from '../../models/catalog/courses.js';
+import { getSortedSections } from '../../models/catalog/catalog.js';
+
+/**
+ * Helper function to add styles specific to the catalog pages only
+ */
+const addCatalogSpecificStyles = (res) => {
+    res.addStyle('<link rel="stylesheet" href="/css/catalog.css">');
+};
 
 // Route handler for the course catalog list page
-export const catalogPage = (req, res) => {
-    const courses = getAllCourses();
-
-    res.render('catalog', {
+export const catalogPage = async (req, res) => {
+    const courses = await getAllCourses();
+    addCatalogSpecificStyles(res);
+    res.render('catalog/list', {
         title: 'Course Catalog',
         courses: courses
     });
 };
   
 // Route handler for individual course detail pages
-export const courseDetailPage = (req, res, next) => {
-    const courseId = req.params.courseId;
-    const course = getCourseById(courseId);
-
+export const courseDetailPage = async (req, res, next) => {
+    const courseSlug = req.params.courseId;
+    const course = await getCourseBySlug(courseSlug);
     // If course doesn't exist, create 404 error
-    if (!course) {
-        const err = new Error(`Course ${courseId} not found`);
+    if (!course || Object.keys(course).length === 0) {
+        const err = new Error(`Course ${courseSlug} not found`);
         err.status = 404;
         return next(err);
     }
-
     // Handle sorting if requested
     const sortBy = req.query.sort || 'time';
-    const sortedSections = getSortedSections(course.sections, sortBy);
-
-    res.render('course-detail', {
-        title: `${course.id} - ${course.title}`,
-        course: { ...course, sections: sortedSections },
+    const sections = await getSortedSections(courseSlug, sortBy);
+    addCatalogSpecificStyles(res);
+    res.render('catalog/detail', {
+        title: `${course.courseCode} - ${course.name}`,
+        course: course,
+        sections: sections,
         currentSort: sortBy
     });
 };

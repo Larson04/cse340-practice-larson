@@ -5,7 +5,7 @@ import db from '../db.js';
  * @param {string} sortBy - Field to sort by ('name', 'department', 'course_code') - defaults to 'department'
  * @returns {Array} Array of course objects sorted by the specified field or empty array on error
  */
-const getAllCourses = async (sortBy = 'department') => {
+export const getAllCourses = async (sortBy = 'department') => {
     try {
         // Validate sortBy parameter - only allow these 3 field names
         const validSortFields = ['name', 'department', 'course_code'];
@@ -61,7 +61,7 @@ const getAllCourses = async (sortBy = 'department') => {
  * @param {number} courseId - The database ID of the course
  * @returns {Object} Course object or empty object if not found/error
  */
-const getCourseById = async (courseId) => {
+export const getCourseById = async (courseId) => {
     try {
         const query = `
             SELECT c.id, c.course_code, c.name, c.description, c.credit_hours, c.slug,
@@ -100,7 +100,7 @@ const getCourseById = async (courseId) => {
  * @param {string} courseSlug - The slug of the course (e.g., 'cse-110')
  * @returns {Object} Course object or empty object if not found/error
  */
-const getCourseBySlug = async (courseSlug) => {
+export const getCourseBySlug = async (courseSlug) => {
     try {
         const query = `
             SELECT c.id, c.course_code, c.name, c.description, c.credit_hours, c.slug,
@@ -140,7 +140,7 @@ const getCourseBySlug = async (courseSlug) => {
  * @param {string} sortBy - Field to sort by ('name', 'department', 'course_code') - defaults to 'course_code'
  * @returns {Array} Array of course objects in the specified department or empty array on error
  */
-const getCoursesByDepartment = async (departmentId, sortBy = 'course_code') => {
+export const getCoursesByDepartment = async (departmentId, sortBy = 'course_code') => {
     try {
         // Validate sortBy parameter - only allow these 3 field names
         const validSortFields = ['name', 'department', 'course_code'];
@@ -191,5 +191,3 @@ const getCoursesByDepartment = async (departmentId, sortBy = 'course_code') => {
         return [];
     }
 };
-
-export { getAllCourses, getCourseById, getCourseBySlug, getCoursesByDepartment };

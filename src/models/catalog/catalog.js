@@ -19,7 +19,7 @@ const extractStartHour = (timeString) => {
 /**
  * Get all sections/offerings for a specific course by course ID
  */
-const getSectionsByCourseId = async (courseId, sortBy = 'time') => {
+export const getSectionsByCourseId = async (courseId, sortBy = 'time') => {
     try {
         const query = `
             SELECT cat.id, cat.time, cat.room, 
@@ -67,7 +67,7 @@ const getSectionsByCourseId = async (courseId, sortBy = 'time') => {
 /**
  * Get all sections/offerings for a specific course by course slug
  */
-const getSectionsByCourseSlug = async (courseSlug, sortBy = 'time') => {
+export const getSectionsByCourseSlug = async (courseSlug, sortBy = 'time') => {
     try {
         const query = `
             SELECT cat.id, cat.time, cat.room, 
@@ -115,7 +115,7 @@ const getSectionsByCourseSlug = async (courseSlug, sortBy = 'time') => {
 /**
  * Get all courses being taught by a specific faculty member by faculty ID
  */
-const getCoursesByFacultyId = async (facultyId, sortBy = 'time') => {
+export const getCoursesByFacultyId = async (facultyId, sortBy = 'time') => {
     try {
         const query = `
             SELECT cat.id, cat.time, cat.room, 
@@ -163,7 +163,7 @@ const getCoursesByFacultyId = async (facultyId, sortBy = 'time') => {
 /**
  * Get all courses being taught by a specific faculty member by faculty slug
  */
-const getCoursesByFacultySlug = async (facultySlug, sortBy = 'time') => {
+export const getCoursesByFacultySlug = async (facultySlug, sortBy = 'time') => {
     try {
         const query = `
             SELECT cat.id, cat.time, cat.room, 
@@ -211,7 +211,7 @@ const getCoursesByFacultySlug = async (facultySlug, sortBy = 'time') => {
 /**
 * Get sections from catalog table only - skips course join, just gets scheduling info
 */
-const getSortedSections = async (courseSlug, sortBy = 'time') => {
+export const getSortedSections = async (courseSlug, sortBy = 'time') => {
     try {
         const query = `
             SELECT cat.id, cat.time, cat.room, cat.course_slug, cat.faculty_slug,
@@ -247,5 +247,3 @@ const getSortedSections = async (courseSlug, sortBy = 'time') => {
         return [];
     }
 };
-
-export { getSectionsByCourseId, getSectionsByCourseSlug, getCoursesByFacultyId, getCoursesByFacultySlug, getSortedSections };

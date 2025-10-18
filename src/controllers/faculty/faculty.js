@@ -1,35 +1,41 @@
-import { getAllFaculty, getFacultyById, getSortedFaculty } from "../../models/faculty/faculty.js";
+import { getFacultyBySlug, getSortedFaculty } from '../../models/faculty/faculty.js';
+
+/**
+ * Helper function to add styles specific to the faculty pages only
+ */
+const addFacultySpecificStyles = (res) => {
+    res.addStyle('<link rel="stylesheet" href="/css/faculty.css">');
+};
 
 // Route handler for the faculty list page
-export const facultyListPage = (req, res) => {
-    const faculty = getAllFaculty();
-    res.render('faculty/list', {
-        title: 'Faculty', 
-        faculty: faculty,
-        currentSort: req.query.sort || 'time'
+export const facultyListPage = async (req, res) => {
+    // Default to sorting by name if no valid sort option is provided
+    const validSortOptions = ['name', 'department', 'title'];
+    const sortBy = validSortOptions.includes(req.query.sort) ? req.query.sort : 'name';
+    // Fetch sorted faculty list
+    const facultyList = await getSortedFaculty(sortBy);
+    addFacultySpecificStyles(res);
+    res.render('faculty/list', { 
+        title: 'Faculty Directory',
+        currentSort: sortBy,
+        facultyList
     });
-}
+};
+
 
 // Route handler for individual faculty detail pages
-export const facultyDetailPage = (req, res, next) => {
-    const facultyId = req.params.facultyId;
-    const faculty = getFacultyById(facultyId);
-
-    // If faculty doesn't exist, create 404 error
-    if (!faculty) {
-        const err = new Error(`Faculty ${facultyId} not found`);
+export const facultyDetailPage = async (req, res, next) => {
+    const facultySlug = req.params.facultyId;
+    const facultyMember = await getFacultyBySlug(facultySlug);
+    // Handle case where faculty member is not found
+    if (!facultyMember || Object.keys(facultyMember).length === 0) {
+        const err = new Error('Faculty Member Not Found');
         err.status = 404;
         return next(err);
     }
-
-    // Handle sorting if requested
-    const sortBy = req.query.sort || 'time';
-    const sortedFaculty = getSortedFaculty(faculty.name, sortBy);
-
+    addFacultySpecificStyles(res);
     res.render('faculty/detail', { 
-        title: `${faculty.name}`, 
-        faculty: { ...faculty, sections: sortedFaculty }, 
-        currentSort: sortBy 
+        title: facultyMember.name,
+        facultyMember
     });
-}
-
+};
