@@ -18,7 +18,7 @@ export const facultyListPage = async (req, res) => {
     res.render('faculty/list', { 
         title: 'Faculty Directory',
         currentSort: sortBy,
-        facultyList
+        faculty: facultyList
     });
 };
 
