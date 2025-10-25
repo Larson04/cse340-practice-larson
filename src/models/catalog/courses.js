@@ -117,6 +117,7 @@ export const getCourseBySlug = async (courseSlug) => {
         }
         
         const course = result.rows[0];
+        console.log(course);
         return {
             id: course.id,
             courseCode: course.course_code,

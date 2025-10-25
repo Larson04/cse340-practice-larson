@@ -20,7 +20,7 @@ export const catalogPage = async (req, res) => {
   
 // Route handler for individual course detail pages
 export const courseDetailPage = async (req, res, next) => {
-    const courseSlug = req.params.courseId;
+    const courseSlug = req.params.courseSlug;
     const course = await getCourseBySlug(courseSlug);
     // If course doesn't exist, create 404 error
     if (!course || Object.keys(course).length === 0) {

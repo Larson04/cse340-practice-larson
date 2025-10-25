@@ -18,11 +18,11 @@
         </div>
 
         <div class="section-list">
-            <% course.sections.forEach(section => { %>
+            <% sections.forEach(sections => { %>
                 <div class="section-card">
-                    <div class="section-time"><%= section.time %></div>
-                    <div class="section-room">Room: <%= section.room %></div>
-                    <div class="section-professor">Instructor: <%= section.professor %></div>
+                    <div class="section-time"><%= sections.time %></div>
+                    <div class="section-room">Room: <%= sections.room %></div>
+                    <div class="section-professor">Instructor: <a href="/faculty/<%= sections.facultySlug %>"><%= sections.professor %></a></div>
                 </div>
             <% }); %>
         </div>
