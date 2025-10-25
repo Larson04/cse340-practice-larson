@@ -24,7 +24,7 @@ router.get('/test-error', testErrorPage);
 
 // Faculty routes
 router.get('/faculty', facultyListPage);
-router.get('/faculty/:facultyId', facultyDetailPage);
+router.get('/faculty/:facultySlug', facultyDetailPage);
 
 // Contact form routes
 router.get('/contact', showContactForm);

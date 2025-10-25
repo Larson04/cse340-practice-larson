@@ -20,14 +20,16 @@ export const facultyListPage = async (req, res) => {
         currentSort: sortBy,
         faculty: facultyList
     });
+    
 };
 
 
 // Route handler for individual faculty detail pages
 export const facultyDetailPage = async (req, res, next) => {
-    const facultySlug = req.params.facultyId;
+    const facultySlug = req.params.facultySlug;
     const facultyMember = await getFacultyBySlug(facultySlug);
     // Handle case where faculty member is not found
+    console.log(facultyMember);
     if (!facultyMember || Object.keys(facultyMember).length === 0) {
         const err = new Error('Faculty Member Not Found');
         err.status = 404;

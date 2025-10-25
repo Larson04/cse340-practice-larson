@@ -35,6 +35,7 @@ const getFacultyById = async (facultyId) => {
             slug: faculty.slug
         };
         
+        
     } catch (error) {
         console.error('Error getting faculty by ID:', error.message);
         return {};
@@ -53,10 +54,10 @@ const getFacultyBySlug = async (facultySlug) => {
             JOIN departments d ON f.department_id = d.id
             WHERE f.slug = $1
         `;
-        
         const result = await db.query(query, [facultySlug]);
         
         if (result.rows.length === 0) {
+            console.log(result);
             return {};
         }
         
