@@ -23,6 +23,11 @@ const setLocalVariables = (req, res) => {
     const themes = ['blue-theme', 'green-theme', 'red-theme'];
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
     res.locals.bodyClass = randomTheme;
+    
+    res.locals.isLoggedIn = false;
+    if (req.session && req.session.user) {
+        res.locals.isLoggedIn = true;
+    }
 
     // Set current year for use in templates
     res.locals.currentYear = new Date().getFullYear();
@@ -37,10 +42,6 @@ const setLocalVariables = (req, res) => {
     res.locals.queryParams = { ...req.query };
 
     // Convenience variable for UI state based on session state
-    res.locals.isLoggedIn = false;
-    if (req.session && req.session.user) {
-        res.locals.isLoggedIn = true;
-    }
 };
 
 /**
