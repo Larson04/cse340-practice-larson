@@ -54,7 +54,7 @@ export const showRegistrationForm = (req, res) => {
     // TODO: Add registration-specific styles using res.addStyle()
     // TODO: Render the registration form view (forms/registration/form)
     addRegistrationSpecificStyles(res);
-    res.render('forms/registration/form', {
+    res.render('forms/registration/form.ejs', {
         title: 'Create Account'
     });
 };
@@ -100,7 +100,7 @@ export const showAllUsers = async (req, res) => {
     // TODO: Add registration-specific styles
     addRegistrationSpecificStyles(res);
     // TODO: Render the users list view (forms/registration/list) with the user data
-    res.render('forms/registration/list', {
+    res.render('forms/registration/list.ejs', {
         title: 'Registered Users',
         users
     });
