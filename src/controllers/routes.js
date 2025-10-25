@@ -4,6 +4,7 @@ import { courseDetailPage, catalogPage } from './catalog/catalog.js';
 import { homePage,aboutPage, demoPage, testErrorPage } from './index.js';
 import { facultyDetailPage, facultyListPage } from './faculty/faculty.js';
 import { showContactForm, processContactForm, showContactResponses, contactValidation } from './forms/contact.js';
+import { showRegistrationForm, processRegistration, showAllUsers, registrationValidation } from './forms/registration.js';
 
 // Create a new router instance
 const router = Router();
@@ -30,5 +31,10 @@ router.get('/faculty/:facultySlug', facultyDetailPage);
 router.get('/contact', showContactForm);
 router.post('/contact', contactValidation, processContactForm);
 router.get('/contact/responses', showContactResponses);
+
+// User registration routes
+router.get('/register', showRegistrationForm);
+router.post('/register', registrationValidation, processRegistration);
+router.get('/users', showAllUsers);
 
 export default router;

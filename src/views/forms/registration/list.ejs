@@ -1,0 +1,32 @@
+<%- include('../../partials/header') %>
+<main>
+    <h1><%= title %></h1>
+
+    <!-- TODO: Check if users array exists and has content -->
+    <!-- TODO: Loop through users and display: ID, name, email, registration date -->
+    <!-- TODO: Format the created_at date nicely -->
+    <!-- TODO: Add appropriate classes and ids; see the styles section for some ideas -->
+    <!-- TODO: Handle the case when no users are registered -->
+    <!-- NOTE: Sorting will not be a feature on this page -->
+
+    <% if (registrationForms && registrationForms.length > 0) { %>
+        <div class="users-list">
+            <% registrationForms.forEach(form => { %>
+                <div class="user-card">
+                    <div class="user-header">
+                        <h3 class="user-name"><%= form.name %></h3>
+                        <h3 class="user-id"><%= form.id %></h3>
+                    </div>
+                    <div class="user-details">
+                        <p class="user-message"><%= form.email %></p>
+                        <p class="user-date">Created: <%= new Date(form.date).toLocaleDateString() %></p>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    <% } else { %>
+        <p class="no-responses">No registered users yet.</p>
+    <% } %>
+
+</main>
+<%- include('../../partials/footer') %>

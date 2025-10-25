@@ -24,6 +24,7 @@ export const contactValidation = [
  * Display the contact form
  */
 export const showContactForm = (req, res) => {
+    addContactSpecificStyles(res);
     res.render('forms/contact/form', {
         title: 'Contact Us'
     });
