@@ -5,7 +5,7 @@ const addRegistrationSpecificStyles = (res) => {
     res.addStyle('<link rel="stylesheet" href="/css/registration.css">');
 };
 
-/**
+/** DeanJackson2004!
  * Comprehensive validation rules for user registration
  */
 export const registrationValidation = [
@@ -68,27 +68,27 @@ export const processRegistration = async (req, res) => {
     // TODO: If errors exist, redirect back to registration form
     if (!errors.isEmpty()) {
         console.log('Validation errors:', errors.array());
-        return res.redirect('/registration');
+        return res.redirect('/register');
     }
     // TODO: Extract name, email, password from req.body
     const { name, email, password } = req.body;
     // TODO: Check if email already exists using emailExists()
-    const emailExists = await emailExists(email);
+    const existsEmail = await emailExists(email);
     // TODO: If email exists, log message and redirect back
-    if (emailExists) {
+    if (existsEmail) {
         console.log('Email already exists');
-        return res.redirect('/registration');
+        return res.redirect('/register');
     }
     // TODO: Save the user using saveUser()
     const user = await saveUser(name, email, password);
     // TODO: If save fails, log error and redirect back
     if (!user) {
         console.log('Failed to save user');
-        return res.redirect('/registration');
+        return res.redirect('/register');
     }
     // TODO: If successful, log success and redirect (maybe to users list?)
     console.log('User saved:', user);
-    res.redirect('/registration');
+    res.redirect('/register');
 };
 
 /**

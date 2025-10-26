@@ -29,11 +29,15 @@ export const emailExists = async (email) => {
         const result = await db.query(query, [email]);
 
         // TODO: Return true if count > 0, false otherwise
-        count = result.rows[0].count
-        if ( count > 0) {
+        const count = parseInt(result.rows[0].count);
+        console.log(count);
+        if ( count > 0 ) {
             return true;
         }
-        return false;
+        if ( count == 0 || null ) {
+            return false;
+        }
+        
         // HINT: result.rows[0].count will be a string, convert to number
 
     } catch (error) {

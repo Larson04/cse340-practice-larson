@@ -9,9 +9,9 @@
     <!-- TODO: Handle the case when no users are registered -->
     <!-- NOTE: Sorting will not be a feature on this page -->
 
-    <% if (registrationForms && registrationForms.length > 0) { %>
+    <% if (users && users.length > 0) { %>
         <div class="users-list">
-            <% registrationForms.forEach(form => { %>
+            <% users.forEach(form => { %>
                 <div class="user-card">
                     <div class="user-header">
                         <h3 class="user-name"><%= form.name %></h3>

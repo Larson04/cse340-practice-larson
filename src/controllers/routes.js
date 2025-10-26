@@ -5,6 +5,8 @@ import { homePage,aboutPage, demoPage, testErrorPage } from './index.js';
 import { facultyDetailPage, facultyListPage } from './faculty/faculty.js';
 import { showContactForm, processContactForm, showContactResponses, contactValidation } from './forms/contact.js';
 import { showRegistrationForm, processRegistration, showAllUsers, registrationValidation } from './forms/registration.js';
+import { requireLogin } from '../middleware/auth.js';
+import { showLoginForm, processLogin, processLogout, showDashboard, loginValidation } from './forms/login.js';
 
 // Create a new router instance
 const router = Router();
@@ -36,5 +38,13 @@ router.get('/contact/responses', showContactResponses);
 router.get('/register', showRegistrationForm);
 router.post('/register', registrationValidation, processRegistration);
 router.get('/users', showAllUsers);
+
+// Authentication routes
+router.get('/login', showLoginForm);
+router.post('/login', loginValidation, processLogin);
+router.get('/logout', processLogout);
+
+// Protected routes (require authentication)
+router.get('/dashboard', requireLogin, showDashboard);
 
 export default router;
