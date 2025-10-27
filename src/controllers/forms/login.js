@@ -69,7 +69,8 @@ export const processLogin = async (req, res) => {
     req.session.user = user;
 
     // TODO: Redirect to protected dashboard (/dashboard)
-    res.redirect('/dashboard');
+    
+    return res.redirect('/dashboard');
 };
 
 /**

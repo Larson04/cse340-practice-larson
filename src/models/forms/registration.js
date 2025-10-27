@@ -9,8 +9,9 @@ import bcrypt from 'bcrypt';
 export const hashPassword = async (plainPassword) => {
     try {
         // TODO: Use bcrypt.hash() with the password and salt rounds of 10
-        hashedPassword = await bcrypt.hash(plainPassword, 10);
+        const hashedPassword = await bcrypt.hash(plainPassword, 10);
         // Return the hashed password
+        // console.log("Hashed password:", hashedPassword);
         return hashedPassword;
     } catch (error) {
         console.error('Error hashing password:', error);
@@ -30,7 +31,7 @@ export const emailExists = async (email) => {
 
         // TODO: Return true if count > 0, false otherwise
         const count = parseInt(result.rows[0].count);
-        console.log(count);
+        // console.log(count);
         if ( count > 0 ) {
             return true;
         }
@@ -56,7 +57,7 @@ export const emailExists = async (email) => {
 export const saveUser = async (name, email, password) => {
     try {
         // TODO: Hash the password using hashPassword function
-        hashedPassword = await hashPassword(password);
+        const hashedPassword = await hashPassword(password);
 
         const query = `
             INSERT INTO users (name, email, password)
