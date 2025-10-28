@@ -25,13 +25,6 @@ const app = express();
 /**
  * Configure Express
  */
-app.use(express.static(path.join(__dirname, 'public')));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'src/views'));
-// Allow Express to receive and process common POST data
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 // Initialize PostgreSQL session store
     const pgSession = connectPgSimple(session);
 
@@ -51,6 +44,13 @@ app.use(express.json());
         maxAge: 24 * 60 * 60 * 1000
     }
     }));
+app.use(express.static(path.join(__dirname, 'public')));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'src/views'));
+// Allow Express to receive and process common POST data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 /**
  * Global Middleware
  */
