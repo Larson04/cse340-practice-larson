@@ -10,7 +10,7 @@
         <!-- TODO: Display user name, email, and account creation date -->
         <h3 class="user-name"><% user.name%></h3>
         <p class="user-email"><% user.email%></p>
-        <p class="user-date">Created: <%= new Date(form.date).toLocaleDateString() %></p>
+        <p class="user-date">Created: <%= new Date(user.rows[0].created_at).toLocaleDateString() %></p>
         <!-- TODO: Use the user object passed from the controller -->
         <!-- TODO: Format the creation date nicely -->
     </div>

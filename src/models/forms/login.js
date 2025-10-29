@@ -17,8 +17,8 @@ export const findUserByEmail = async (email) => {
     try {
         // TODO: Return the user object if found, null otherwise
         const result = await db.query(query, [email]);
-        console.log("User:",result.rows);
-        return result.rows;
+        console.log("User:",result.rows[0].password);
+        return result;
     } catch (error) {
         console.error('DB Error in findUserByEmail:', error);
         return null;

@@ -54,8 +54,12 @@ export const processLogin = async (req, res) => {
         return res.redirect('/login');
     }
 
+    // console.log('req.body',req.body);
+    const userPassword = user.rows[0].password;
+    // console.log('password', password);
+    // console.log('userPassword', userPassword);
     // TODO: Verify password using verifyPassword()
-    const passwordMatch = await verifyPassword(password, user.password);
+    const passwordMatch = await verifyPassword(password, userPassword);
     // TODO: If password incorrect, log "Invalid password" and redirect back
     if (!passwordMatch) {
         console.log('Invalid password');
@@ -122,13 +126,14 @@ export const processLogout = (req, res) => {
 export const showDashboard = (req, res) => {
     const user = req.session.user;
     const sessionData = req.session;
+    console.log('sessionData:', sessionData);
 
     // TODO: Security check! Ensure user and sessionData does not contain the password field
-    if (user.password) {
-        delete user.password;
+    if (user.rows[0].password) {
+        delete user.rows[0].password;
     }
-    if (sessionData.user.password) {
-        delete sessionData.user.password;
+    if (sessionData.user.rows[0].password) {
+        delete sessionData.user.rows[0].password;
     }
 
     // TODO: Add login-specific styles
