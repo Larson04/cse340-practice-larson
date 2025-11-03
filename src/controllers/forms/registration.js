@@ -67,7 +67,7 @@ export const processRegistration = async (req, res) => {
     const errors = validationResult(req);
     // TODO: If errors exist, redirect back to registration form
     if (!errors.isEmpty()) {
-        console.log('Validation errors:', errors.array());
+        req.flash('error', 'Invalid email or password');
         return res.redirect('/register');
     }
     // TODO: Extract name, email, password from req.body
@@ -76,18 +76,18 @@ export const processRegistration = async (req, res) => {
     const existsEmail = await emailExists(email);
     // TODO: If email exists, log message and redirect back
     if (existsEmail) {
-        console.log('Email already exists');
+        req.flash('warning', 'An account with this email already exists');
         return res.redirect('/register');
     }
     // TODO: Save the user using saveUser()
     const user = await saveUser(name, email, password);
     // TODO: If save fails, log error and redirect back
     if (!user) {
-        console.log('Failed to save user');
+        req.flash('error', 'Failed to save user');
         return res.redirect('/register');
     }
     // TODO: If successful, log success and redirect (maybe to users list?)
-    console.log('User saved:', user);
+    req.flash('success', 'User saved:' + name);
     res.redirect('/register');
 };
 

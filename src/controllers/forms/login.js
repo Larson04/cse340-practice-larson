@@ -41,7 +41,7 @@ export const processLogin = async (req, res) => {
     const validationErrors = validationResult(req);
     // TODO: If errors exist, redirect back to login form
     if (!validationErrors.isEmpty()) {
-        console.log('Validation errors:', validationErrors.array());
+        req.flash('error', 'Invalid email or password');
         return res.redirect('/login');
     }
     // TODO: Extract email and password from req.body
@@ -50,19 +50,16 @@ export const processLogin = async (req, res) => {
     const user = await findUserByEmail(email);
     // TODO: If user not found, log "User not found" and redirect back
     if (!user) {
-        console.log('User not found');
+        req.flash('error', 'User not found');
         return res.redirect('/login');
     }
 
-    // console.log('req.body',req.body);
     const userPassword = user.rows[0].password;
-    // console.log('password', password);
-    // console.log('userPassword', userPassword);
     // TODO: Verify password using verifyPassword()
     const passwordMatch = await verifyPassword(password, userPassword);
     // TODO: If password incorrect, log "Invalid password" and redirect back
     if (!passwordMatch) {
-        console.log('Invalid password');
+        req.flash('error', 'Invalid password');
         return res.redirect('/login');
     }
 
@@ -126,7 +123,6 @@ export const processLogout = (req, res) => {
 export const showDashboard = (req, res) => {
     const user = req.session.user;
     const sessionData = req.session;
-    console.log('sessionData:', sessionData);
 
     // TODO: Security check! Ensure user and sessionData does not contain the password field
     if (user.rows[0].password) {

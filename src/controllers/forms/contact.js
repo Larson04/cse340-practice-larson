@@ -38,7 +38,7 @@ export const processContactForm = async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        console.log('Validation errors:', errors.array());
+        req.flash('error', 'Subject must be at least 2 characters long and message must be at least 10 characters long.');
         return res.redirect('/contact');
     }
 
@@ -48,11 +48,11 @@ export const processContactForm = async (req, res) => {
     const savedForm = await saveContactForm(subject, message);
 
     if (!savedForm) {
-        console.log('Failed to save contact form.');
+        req.flash('error', 'Failed to save contact form.');
         return res.redirect('/contact');
     }
 
-    console.log('Contact form saved:', savedForm);
+    req.flash('success', 'Contact form saved!');
     res.redirect('/contact');
 };
 
