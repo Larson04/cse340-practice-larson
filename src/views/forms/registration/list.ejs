@@ -21,6 +21,23 @@
                         <p class="user-message"><%= form.email %></p>
                         <p class="user-date">Created: <%= new Date(form.created_at).toLocaleDateString() %></p>
                     </div>
+                    <% if (form && form.user) { %>
+                    <% 
+                        const currentUser = form.user;
+                        const isOwnCard = currentUser.id === user.id;
+                        const isAdmin = currentUser.role_name === 'admin';
+                        const canEdit = isOwnCard || isAdmin;
+                        const canDelete = isAdmin && !isOwnCard;
+                    %>
+                        <div class="user-actions">
+                            <% if (canEdit) { %>
+                                <button class="edit-button"><a href="/users/<%= form.id %>/edit">Edit</a></button>
+                            <% } %>
+                            <% if (canDelete) { %>
+                                <button class="delete-button"><a href="/users/<%= form.id %>/delete">Delete</a></button>
+                            <% } %>
+                        </div>
+                    <% } %>
                 </div>
             <% }); %>
         </div>
