@@ -8,36 +8,34 @@
     <!-- TODO: Add appropriate classes and ids; see the styles section for some ideas -->
     <!-- TODO: Handle the case when no users are registered -->
     <!-- NOTE: Sorting will not be a feature on this page -->
-
+    
     <% if (users && users.length > 0) { %>
         <div class="users-list">
-            <% users.forEach(form => { %>
+            <% users.forEach(user => { %>
                 <div class="user-card">
                     <div class="user-header">
-                        <h3 class="user-name"><%= form.name %></h3>
-                        <h3 class="user-id"><%= form.id %></h3>
+                        <h3 class="user-name"><%= user.name %></h3>
+                        <h3 class="user-id"><%= user.id %></h3>
                     </div>
                     <div class="user-details">
-                        <p class="user-message"><%= form.email %></p>
-                        <p class="user-date">Created: <%= new Date(form.created_at).toLocaleDateString() %></p>
+                        <p class="user-message"><%= user.email %></p>
+                        <p class="user-date">Created: <%= new Date(user.created_at).toLocaleDateString() %></p>
                     </div>
-                    <% if (form && form.user) { %>
-                    <% 
-                        const currentUser = form.user;
+                    
+                        <% 
                         const isOwnCard = currentUser.id === user.id;
                         const isAdmin = currentUser.role_name === 'admin';
                         const canEdit = isOwnCard || isAdmin;
                         const canDelete = isAdmin && !isOwnCard;
-                    %>
+                        %>
                         <div class="user-actions">
                             <% if (canEdit) { %>
-                                <button class="edit-button"><a href="/users/<%= form.id %>/edit">Edit</a></button>
+                                <button class="edit-button"><a href="/users/<%= user.id %>/edit">Edit</a></button>
                             <% } %>
                             <% if (canDelete) { %>
-                                <button class="delete-button"><a href="/users/<%= form.id %>/delete">Delete</a></button>
+                                <button class="delete-button"><a href="/users/<%= user.id %>/delete">Delete</a></button>
                             <% } %>
                         </div>
-                    <% } %>
                 </div>
             <% }); %>
         </div>

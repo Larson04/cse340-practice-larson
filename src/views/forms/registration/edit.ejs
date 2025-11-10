@@ -1,33 +1,38 @@
 <%- include('../../partials/header') %>
-<main>
+
     <h1>Edit Account</h1>
-    <form method="POST" action="/users/<%= user.id %>/update">
-        <div>
-            <label for="name">Name:</label>
-            <input 
-                type="text" 
-                id="name" 
-                name="name" 
-                value="<%= user.name %>" 
-                required
-            >
-        </div>
+    <form class="registration-form" method="POST" action="/users/<%= user.id %>/update">
+        <div class="form-group">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="<%= user.name %>" required>
+            </div>
 
-        <div>
-            <label for="email">Email:</label>
-            <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                value="<%= user.email %>" 
-                required
-            >
-        </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<%= user.email %>" required>
+            </div>
 
-        <div>
-            <button type="submit">Update Account</button>
-            <a href="/users">Cancel</a>
-        </div>
+            <div>
+                <button type="submit">Update Account</button>
+                <a href="/users">Cancel</a>
+            </div>
+        </div>    
     </form>
-</main>
+    <form method="POST" action="#" id="testing-form" target="_blank">
+    <p>
+        Ensure you are logged-in as a <strong>standard (non-admin)</strong> user before submitting this form to test access restrictions.
+    </p>
+    </p>
+    <button type="submit">Send Post</button>
+</form>
+<script type="text/javascript">
+    const form = document.querySelector('#testing-form');
+    form.addEventListener('submit', (event) => {
+        const portInput = form.querySelector('input[name="post"]');
+        const port = portInput.value || '3000';
+        form.action = `http://127.0.0.1:${port}/users/2/delete`;
+    });
+</script>
+
 <%- include('../../partials/footer') %>

@@ -83,8 +83,15 @@ export const saveUser = async (name, email, password) => {
 export const getAllUsers = async () => {
     try {
         const query = `
-            SELECT id, name, email, created_at, updated_at
+            SELECT 
+            users.id, 
+            users.name, 
+            users.email, 
+            users.created_at,
+            roles.role_name
             FROM users
+            INNER JOIN roles 
+            ON users.role_id = roles.id
             ORDER BY created_at DESC
         `;
 

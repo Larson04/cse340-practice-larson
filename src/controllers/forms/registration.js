@@ -115,12 +115,14 @@ export const processRegistration = async (req, res) => {
 export const showAllUsers = async (req, res) => {
     // TODO: Get all users using getAllUsers()
     const users = await getAllUsers();
+    console.log('users:', users);
     // TODO: Add registration-specific styles
     addRegistrationSpecificStyles(res);
     // TODO: Render the users list view (forms/registration/list) with the user data
     res.render('forms/registration/list.ejs', {
         title: 'Registered Users',
-        users
+        users,
+        currentUser: req.session.user
     });
 };
 
@@ -130,7 +132,9 @@ export const showAllUsers = async (req, res) => {
  */
 export const showEditAccountForm = async (req, res) => {
     const targetUserId = parseInt(req.params.id);
+    console.log("targetUserId: ", targetUserId);
     const currentUser = req.session.user;
+    console.log("currentUser: ", currentUser.rows[0].id);
 
     // TODO: Retrieve the target user from the database using getUserById
     const targetUser = await getUserById(targetUserId);
@@ -145,7 +149,7 @@ export const showEditAccountForm = async (req, res) => {
     // Users can edit their own (currentUser.id === targetUserId)
     // Admins can edit anyone (currentUser.role_name === 'admin')
     // TODO: If current user cannot edit, set flash message and redirect
-    if(currentUser.id !== targetUserId || currentUser.role_name !== 'admin') {
+    if(currentUser.rows[0].id !== targetUserId && currentUser.role_name !== 'admin') {
         req.flash('error', 'You do not have permission to edit this account.');
         return res.redirect('/users');
     }
