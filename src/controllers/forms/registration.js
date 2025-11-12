@@ -114,15 +114,15 @@ export const processRegistration = async (req, res) => {
  */
 export const showAllUsers = async (req, res) => {
     // TODO: Get all users using getAllUsers()
-    const users = await getAllUsers();
-    console.log('users:', users);
+    const userList = await getAllUsers();
+    const currentUser = req.session.user;
     // TODO: Add registration-specific styles
     addRegistrationSpecificStyles(res);
     // TODO: Render the users list view (forms/registration/list) with the user data
     res.render('forms/registration/list.ejs', {
         title: 'Registered Users',
-        users,
-        currentUser: req.session.user
+        userList,
+        currentUser
     });
 };
 
@@ -149,7 +149,7 @@ export const showEditAccountForm = async (req, res) => {
     // Users can edit their own (currentUser.id === targetUserId)
     // Admins can edit anyone (currentUser.role_name === 'admin')
     // TODO: If current user cannot edit, set flash message and redirect
-    if(currentUser.rows[0].id !== targetUserId && currentUser.role_name !== 'admin') {
+    if(currentUser.rows[0].role_name !== 'admin' && currentUser.rows[0].id !== targetUserId) {
         req.flash('error', 'You do not have permission to edit this account.');
         return res.redirect('/users');
     }
@@ -191,7 +191,7 @@ export const processEditAccount = async (req, res) => {
 
     // TODO: Check edit permissions (same as showEditAccountForm)
     // If cannot edit, set flash message and redirect
-    if(currentUser.id !== targetUserId || currentUser.role_name !== 'admin') {
+    if(currentUser.rows[0].role_name !== 'admin' && currentUser.rows[0].id !== targetUserId) {
         req.flash('error', 'You do not have permission to edit this account.');
         return res.redirect('/users');
     }
@@ -232,13 +232,14 @@ export const processEditAccount = async (req, res) => {
  * Delete a user account (admin only)
  */
 export const processDeleteAccount = async (req, res) => {
+    console.log("req.params.id: ", req.params.id);
     const targetUserId = parseInt(req.params.id);
     const currentUser = req.session.user;
-
+    console.log("targetUserId: ", targetUserId); 
     // TODO: Verify current user is an admin
     // Only admins should be able to delete accounts
     // If not admin, set flash message and redirect
-    if(currentUser.role_name !== 'admin') {
+    if(currentUser.rows[0].role_name !== 'admin') {
         req.flash('error', 'You do not have permission to delete accounts.');
         return res.redirect('/users');
     }
@@ -259,7 +260,7 @@ export const processDeleteAccount = async (req, res) => {
     }
 
     // Success! Set flash message and redirect
-    req.session.flash = {
+    req.flash = {
         type: 'success',
         message: 'Account deleted successfully.'
     };

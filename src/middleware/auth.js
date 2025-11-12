@@ -34,13 +34,13 @@ export const requireRole = (roleName) => {
 
         // TODO: Check if user's role_name matches the required roleName
         // If roles don't match, set flash message and redirect to /
-        if (req.session.user.role_name !== roleName) {
+        if (req.session.user.rows[0].role_name !== roleName) {
             req.flash('error', 'You do not have permission to access this page.');
             return res.redirect('/');
         }
 
         // TODO: If user has required role, call next() to continue
-        if (req.session.user.role_name === roleName) {
+        if (req.session.user.rows[0].role_name === roleName) {
             next();
         }
     };

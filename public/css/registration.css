@@ -122,8 +122,9 @@
 
         .user-details {
             display: grid;
-            grid-template-columns: 100px 1fr;
+            grid-template-columns: 200px 1fr;
             gap: 1rem;
+
 
             .detail-item {
                 .label {
@@ -136,6 +137,7 @@
                 .value {
                     color: #333;
                     font-size: 1rem;
+                    margin: 0.5rem;
                 }
             }
         }
